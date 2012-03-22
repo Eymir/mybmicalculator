@@ -1,41 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
+>
+    <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
     >
-    <TextView
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/label_description"
-    />
-    <TextView
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/label_height"
-    />
-    <EditText
-    android:id="@+id/text_height"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:numeric="integer"
-    android:maxLength="3"
-    android:text="160">
-    </EditText>
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_height"
+        />
 
-    <TextView
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_previous_time"
+        />
+
+        <TextView
+        android:id="@+id/label_previous_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/text_height"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:numeric="integer"
+        android:maxLength="3"
+        android:text="160"
+    />
+
+    <LinearLayout
+    android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="@string/label_weight"
-    />
+    >
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_weight"
+        />
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_previous_time"
+        />
+
+        <TextView
+        android:id="@+id/label_previous_weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    </LinearLayout>
+
     <EditText
     android:id="@+id/text_weight"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:numeric="integer"
     android:maxLength="3"
-    android:text="50">
-    </EditText>
+    android:text="50"
+    />
 
     <Button
     android:id="@+id/button_calculate"
