@@ -14,5 +14,26 @@
 
         <activity android:name=".ResultActivity"
                   android:label="@string/app_name" />
+
+        <receiver android:name =".MaleIntentReceiver">
+            <intent-filter>
+                <action android:name = "com.mamezou.android.intent.action.CALCULLATE_BMI" />
+                <category android:name = "com.mamezou.android.intent.category.bmi.MALE" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name =".FeMaleIntentReceiver">
+            <intent-filter android:priority="1">
+                <action android:name = "com.mamezou.android.intent.action.CALCULLATE_BMI" />
+            </intent-filter>
+
+            <intent-filter android:priority="0">
+                <action android:name = "com.mamezou.android.intent.action.CALCULLATE_BMI_WITH_URI" />
+                <data android:scheme="bmi" />
+                <data android:host="" />
+                <data android:pathPrefix="/female" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>
+
