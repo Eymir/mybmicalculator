@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,12 @@ public class BMICalculatorActivity extends Activity {
 
     private TextView labelPreviousWeight;
 
+    public static final String ACTION_CALCULATE_BMI = "com.mamezou.android.intent.action.CALCULLATE_BMI";
+
+    public static final String ACTION_CALCULATE_BMI_WITH_URI = "com.mamezou.android.intent.action.CALCULLATE_BMI_WITH_URI";
+
+    public static final String CATEGORY_MALE = "com.mamezou.android.intent.category.bmi.MALE";
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
@@ -39,15 +46,20 @@ public class BMICalculatorActivity extends Activity {
         Button button = (Button) findViewById(R.id.button_calculate);
         Button buttonShowNextActivity = (Button) findViewById(R.id.button_show_next_activity);
 
+        Button buttonBroadcastWithAction = (Button)findViewById(R.id.button_broadcast_with_action);
+        Button buttonBroadcastWithCategory = (Button)findViewById(R.id.button_broadcast_with_category);
+        Button buttonBroadcastWithUri = (Button)findViewById(R.id.button_broadcast_with_uri);
+
         // dialog
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.label_bmi_description);
-        builder.setPositiveButton(R.string.button_close_dialog, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                setResult(RESULT_OK);
-            }
-        });
+        builder.setPositiveButton(R.string.button_close_dialog,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        setResult(RESULT_OK);
+                    }
+                });
 
         // ボタン-計算
         button.setOnClickListener(new View.OnClickListener() {
@@ -68,10 +80,50 @@ public class BMICalculatorActivity extends Activity {
         buttonShowNextActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BMICalculatorActivity.this, ResultActivity.class);
+                Intent intent = new Intent(BMICalculatorActivity.this,
+                        ResultActivity.class);
+                intent.putExtra("HEIGHT", Integer.parseInt(textHeight.getText()
+                        .toString()));
+                intent.putExtra("WEIGHT", Integer.parseInt(textWeight.getText()
+                        .toString()));
+                startActivityForResult(intent, 0);
+            }
+        });
+
+
+        buttonBroadcastWithAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //アクションのみ指定（男性と女性両方のReceiverが応答）
+                Intent intent = new Intent(ACTION_CALCULATE_BMI);
                 intent.putExtra("HEIGHT", Integer.parseInt(textHeight.getText().toString()));
                 intent.putExtra("WEIGHT", Integer.parseInt(textWeight.getText().toString()));
-                startActivityForResult(intent, 0);
+                sendBroadcast(intent);
+            }
+        });
+
+        buttonBroadcastWithCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //アクションとカテゴリを指定（男性のReceiverが応答）
+                Intent intent = new Intent(ACTION_CALCULATE_BMI);
+                intent.addCategory(CATEGORY_MALE);
+                intent.putExtra("HEIGHT", Integer.parseInt(textHeight.getText().toString()));
+                intent.putExtra("WEIGHT", Integer.parseInt(textWeight.getText().toString()));
+                sendBroadcast(intent);
+            }
+        });
+
+        buttonBroadcastWithUri.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //URIを指定（女性のReceiverのみが応答）
+                Intent intent = new Intent(ACTION_CALCULATE_BMI_WITH_URI);
+                Uri uri = Uri.parse("bmi:///female");
+                intent.setData(uri);
+                intent.putExtra("HEIGHT", Integer.parseInt(textHeight.getText().toString()));
+                intent.putExtra("WEIGHT", Integer.parseInt(textWeight.getText().toString()));
+                sendBroadcast(intent);
             }
         });
     }
@@ -79,9 +131,12 @@ public class BMICalculatorActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            SharedPreferences prefrences = getSharedPreferences("PREVIOUS_RESULT", MODE_PRIVATE);
-            labelPreviousHeight.setText(String.valueOf(prefrences.getInt("PREVIOUS_HEIGHT", 0)));
-            labelPreviousWeight.setText(String.valueOf(prefrences.getInt("PREVIOUS_WEIGHT", 0)));
+            SharedPreferences prefrences = getSharedPreferences(
+                    "PREVIOUS_RESULT", MODE_PRIVATE);
+            labelPreviousHeight.setText(String.valueOf(prefrences.getInt(
+                    "PREVIOUS_HEIGHT", 0)));
+            labelPreviousWeight.setText(String.valueOf(prefrences.getInt(
+                    "PREVIOUS_WEIGHT", 0)));
         }
     }
 }

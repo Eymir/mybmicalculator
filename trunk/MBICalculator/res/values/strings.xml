@@ -17,4 +17,10 @@
     <string name="label_previous_time">...前回:</string>
     <string name="button_save_result">入力値を記録して戻る</string>
     <string name="button_close_current_activity">入力値を記録せずに戻る</string>
+
+    <string name="label_male">あなたが男性なら</string>
+    <string name="label_female">あなたが女性なら</string>
+    <string name="button_broadcast_with_action">ブロードキャスト-アクションのみ指定</string>
+    <string name="button_broadcast_with_category">ブロードキャスト-アクションとカテゴリ指定</string>
+    <string name="button_broadcast_with_uri">ブロードキャスト-アクションとURI指定</string>
 </resources>
