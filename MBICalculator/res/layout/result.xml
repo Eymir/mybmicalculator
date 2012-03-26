@@ -36,4 +36,12 @@
     android:layout_height="wrap_content"
     android:text="@string/button_close_current_activity"
     />
+
+    <Button
+    android:id="@+id/button_notify_result"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/button_notify_result"
+    />
+
 </LinearLayout>

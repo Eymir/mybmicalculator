@@ -23,4 +23,7 @@
     <string name="button_broadcast_with_action">ブロードキャスト-アクションのみ指定</string>
     <string name="button_broadcast_with_category">ブロードキャスト-アクションとカテゴリ指定</string>
     <string name="button_broadcast_with_uri">ブロードキャスト-アクションとURI指定</string>
+
+    <string name="button_notify_result">今回の結果を通知する</string>
 </resources>
+
